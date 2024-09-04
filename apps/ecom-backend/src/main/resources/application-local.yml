@@ -1,0 +1,14 @@
+logging:
+  level:
+    ROOT: INFO
+    org.hibernate.SQL: DEBUG
+    org.springframework.security: INFO
+    fr.codecake.ecom: DEBUG
+    org.apache.hc.client5.http: INFO
+
+spring:
+  devtools:
+    restart:
+      enabled: true
+    livereload:
+      enabled: true

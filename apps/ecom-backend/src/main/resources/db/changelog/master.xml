@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  <property name="now" value="current_timestamp" dbms="postgresql"/>
+  <property name="floatType" value="float4" dbms="postgresql"/>
+  <property name="clobType" value="clob" dbms="postgresql"/>
+  <property name="blobType" value="blob" dbms="postgresql"/>
+  <property name="uuidType" value="uuid" dbms="postgresql"/>
+  <property name="datetimeType" value="datetime" dbms="postgresql"/>
+
+  <include file="/db/changelog/00000000000001_user.xml" relativeToChangelogFile="false"/>
+  <include file="/db/changelog/00000000000002_product_category.xml" relativeToChangelogFile="false"/>
+  <include file="/db/changelog/00000000000003_product.xml" relativeToChangelogFile="false"/>
+  <include file="/db/changelog/00000000000004_order.xml" relativeToChangelogFile="false"/>
+
+</databaseChangeLog>

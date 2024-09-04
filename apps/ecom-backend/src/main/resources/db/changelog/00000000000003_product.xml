@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="00000000000003-product-seq" author="codecake">
+    <createSequence sequenceName="product_sequence" startValue="1" incrementBy="1"/>
+  </changeSet>
+
+  <changeSet id="00000000000003-product" author="codecake">
+    <createTable tableName="product">
+      <column name="id" type="bigint">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+      <column name="public_id" type="${uuidType}">
+        <constraints nullable="false" unique="true"/>
+      </column>
+      <column name="name" type="varchar(256)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="price" type="float"/>
+      <column name="size" type="varchar(256)"/>
+      <column name="color" type="varchar(256)"/>
+      <column name="brand" type="varchar(256)"/>
+      <column name="description" type="varchar(2000)"/>
+      <column name="featured" type="bool"/>
+      <column name="nb_in_stock" type="int"/>
+      <column name="created_date" type="timestamp"/>
+      <column name="last_modified_date" type="timestamp"/>
+      <column name="category_fk" type="bigint"/>
+    </createTable>
+    <addForeignKeyConstraint baseColumnNames="category_fk" baseTableName="product"
+                             constraintName="fk_category_product_constraint" deferrable="false"
+                             initiallyDeferred="false" referencedColumnNames="id" referencedTableName="product_category"
+                             validate="true"
+                             onDelete="NO ACTION"/>
+  </changeSet>
+
+
+  <changeSet id="00000000000003-picture-product-seq" author="codecake">
+    <createSequence sequenceName="product_picture_sequence" startValue="1" incrementBy="1"/>
+  </changeSet>
+
+  <changeSet id="00000000000003-product-picture" author="codecake">
+    <createTable tableName="product_picture">
+      <column name="id" type="bigint">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+      <column name="file" type="${blobType}">
+        <constraints nullable="false"/>
+      </column>
+      <column name="file_content_type" type="varchar(255)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_date" type="timestamp"/>
+      <column name="last_modified_date" type="timestamp"/>
+      <column name="product_fk" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+    </createTable>
+    <addForeignKeyConstraint baseColumnNames="product_fk" baseTableName="product_picture"
+                             constraintName="fk_product_picture_constraint" deferrable="false"
+                             initiallyDeferred="false" referencedColumnNames="id" referencedTableName="product"
+                             validate="true"
+                             onDelete="CASCADE"/>
+  </changeSet>
+
+</databaseChangeLog>

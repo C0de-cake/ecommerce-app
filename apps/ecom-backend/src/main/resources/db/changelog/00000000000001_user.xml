@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="00000000000001-seq" author="codecake">
+        <createSequence sequenceName="user_sequence" startValue="1" incrementBy="1"/>
+    </changeSet>
+
+    <changeSet id="00000000000001-user" author="codecake">
+        <createTable tableName="ecommerce_user">
+            <column name="id" type="bigint">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="public_id" type="${uuidType}">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="first_name" type="varchar(50)"/>
+            <column name="last_name" type="varchar(50)"/>
+            <column name="email" type="varchar(255)">
+                <constraints unique="true" nullable="true" uniqueConstraintName="ux_user_email"/>
+            </column>
+            <column name="address_street" type="varchar(255)"/>
+            <column name="address_zip_code" type="varchar(255)"/>
+            <column name="address_city" type="varchar(255)"/>
+            <column name="address_country" type="varchar(255)"/>
+            <column name="image_url" type="varchar(256)"/>
+            <column name="last_seen" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_date" type="timestamp"/>
+            <column name="last_modified_date" type="timestamp"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="00000000000001-authority" author="codecake">
+        <createTable tableName="authority">
+            <column name="name" type="varchar(50)">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="user_authority">
+            <column name="user_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="authority_name" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey columnNames="user_id, authority_name" tableName="user_authority"/>
+
+        <addForeignKeyConstraint baseColumnNames="authority_name"
+                                 baseTableName="user_authority"
+                                 constraintName="fk_authority_name"
+                                 referencedColumnNames="name"
+                                 referencedTableName="authority"/>
+
+        <addForeignKeyConstraint baseColumnNames="user_id"
+                                 baseTableName="user_authority"
+                                 constraintName="fk_user_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="ecommerce_user"/>
+        <loadData
+                file="db/data/authority.csv"
+                separator=";"
+                tableName="authority"
+                usePreparedStatements="true">
+            <column name="name" type="string"/>
+        </loadData>
+    </changeSet>
+</databaseChangeLog>

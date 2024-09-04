@@ -1,0 +1,11 @@
+services:
+  database:
+    image: 'postgres:latest'
+    ports:
+      - '5432:5432'
+    environment:
+      - 'POSTGRES_USER=codecake'
+      - 'POSTGRES_DB=codecake'
+      - 'POSTGRES_PASSWORD=codecake'
+    volumes:
+      - '~/volumes/codecake-yt/postgres:/var/lib/postgresql/data'

@@ -41,6 +41,7 @@
     "@nx/js": "19.6.5",
     "@nx/web": "19.6.5",
     "@nx/workspace": "19.6.5",
+    "@nxrocks/nx-spring-boot": "^10.2.6",
     "@schematics/angular": "~18.2.0",
     "@swc-node/register": "~1.9.1",
     "@swc/core": "~1.5.7",
