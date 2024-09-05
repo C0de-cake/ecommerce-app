@@ -34,7 +34,7 @@ spring:
         connection:
           provider_disables_autocommit: true
         order_inserts: true
-        default_schema: ecommerce
+        default_schema: ecommerce_yt
     hibernate:
       ddl-auto: validate
       naming:
@@ -52,7 +52,7 @@ spring:
         jwt:
           issuer-uri: https://codecake.kinde.com
           jwk-set-uri: https://codecake.kinde.com/.well-known/jwks
-          audiences: https://codecake.kinde.com/api
+          audiences: http://localhost:8080/api
   devtools:
     restart:
       enabled: false
@@ -66,3 +66,17 @@ spring:
 
 server:
   port: 8080
+
+application:
+  cors:
+    allowed-origins: http://localhost:4200
+    allowed-methods: "*"
+    allowed-headers: "*"
+    exposed-headers: "*"
+    allow-credentials: false
+    max-age: 300
+  kinde:
+    api: https://codecake.kinde.com
+    client-id: ${KINDE_CLIENT_ID}
+    client-secret: ${KINDE_CLIENT_SECRET}
+    audience: https://codecake.kinde.com/api
