@@ -1,0 +1,19 @@
+<a class="flex justify-start cursor-pointer" [routerLink]="['/product', product().publicId]">
+  <div class="flex flex-col justify-center rounded-xl w-full min-h-[400px] h-full shadow-xl">
+    <figure class="flex justify-center items-center h-full">
+      <img [src]="'data:' + product().pictures[0].mimeType + ';base64,' + product().pictures[0].file"
+      alt="{{product().name}}" width="250px"/>
+    </figure>
+    <div class="p-5 justify-end">
+      <div class="text-sm">{{product().brand}}</div>
+      <h2 class="card-title w-full truncate">
+        <div class="truncate">{{product().name}} - {{product().size}}</div>
+        <div class="badge badge-secondary">NEW</div>
+      </h2>
+      <div>
+        <span class="line-through me-2">{{product().price + 200 | currency}}</span>
+        <span class="me-2">{{product().price | currency}}</span>
+      </div>
+    </div>
+  </div>
+</a>
