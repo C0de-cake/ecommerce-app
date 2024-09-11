@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { Oauth2Service } from '../../auth/oauth2.service';
+import { ClickOutside } from 'ngxtension/click-outside';
 
 @Component({
   selector: 'ecom-navbar',
   standalone: true,
-  imports: [CommonModule, RouterLink, FaIconComponent],
+  imports: [CommonModule, RouterLink, FaIconComponent, ClickOutside],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss',
 })
@@ -38,5 +39,9 @@ export class NavbarComponent {
     if (bodyElement) {
       bodyElement.blur();
     }
+  }
+
+  closeMenu(menu: HTMLDetailsElement) {
+    menu.removeAttribute('open');
   }
 }

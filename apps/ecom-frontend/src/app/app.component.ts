@@ -9,11 +9,18 @@ import { fontAwesomeIcons } from './shared/font-awesome-icons';
 import { NavbarComponent } from './layout/navbar/navbar.component';
 import { FooterComponent } from './layout/footer/footer.component';
 import { Oauth2Service } from './auth/oauth2.service';
-import { isPlatformBrowser } from '@angular/common';
+import { isPlatformBrowser, NgClass } from '@angular/common';
+import { ToastService } from './shared/toast/toast.service';
 
 @Component({
   standalone: true,
-  imports: [RouterModule, FaIconComponent, NavbarComponent, FooterComponent],
+  imports: [
+    RouterModule,
+    FaIconComponent,
+    NavbarComponent,
+    FooterComponent,
+    NgClass,
+  ],
   selector: 'ecom-root',
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
@@ -23,6 +30,8 @@ export class AppComponent implements OnInit {
   private faConfig = inject(FaConfig);
 
   private oauth2Service = inject(Oauth2Service);
+
+  toastService = inject(ToastService);
 
   platformId = inject(PLATFORM_ID);
 
@@ -35,6 +44,7 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.initFontAwesome();
+    this.toastService.show('hello toast', 'SUCCESS');
   }
 
   private initFontAwesome() {

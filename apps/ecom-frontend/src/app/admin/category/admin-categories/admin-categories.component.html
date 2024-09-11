@@ -1,0 +1,51 @@
+<div class="w-full flex justify-between items-center">
+  <div>
+    <h1 class="text-2xl font-bold">Categories</h1>
+    <div>Add and delete categories</div>
+  </div>
+  <button class="btn btn-primary" routerLink="/admin/categories/create">
+    Create categories
+  </button>
+</div>
+<div class="border-t w-full border-solid border-gray-300 mt-3 mb-5"></div>
+@if (categoriesQuery.isSuccess() && categoriesQuery.data()!.content.length !== 0) {
+  <div class="overflow-x-auto border border-gray-300 rounded-md">
+    <table class="table table-lg table-zebra">
+      <thead class="border-gray-300">
+      <tr class="border-gray-300">
+        <th></th>
+        <th>Public Id</th>
+        <th>Name</th>
+        <th>Actions</th>
+      </tr>
+      </thead>
+      <tbody class="border-0">
+      @for (category of categoriesQuery.data()!.content; track category.publicId; let i = $index) {
+        <tr class="border-gray-300">
+          <th>{{ i }}</th>
+          <td>{{category.publicId}}</td>
+          <td>{{category.name}}</td>
+          <td>
+            <div (click)="deleteCategory(category.publicId!)" class="btn btn-secondary btn-sm">
+              Delete
+            </div>
+          </td>
+        </tr>
+      }
+      </tbody>
+    </table>
+  </div>
+} @else if (categoriesQuery.isPending()) {
+  <div class="flex w-full justify-center">
+    <span class="loading loading-spinner loading-lg"></span>
+  </div>
+} @else if (categoriesQuery.isError()) {
+  <div class="alert alert-error">
+    <span>Error! Failed to load categories.</span>
+  </div>
+} @else if(categoriesQuery.data()!.content.length === 0) {
+  <div role="alert" class="alert alert-info">
+    <fa-icon [icon]="['fas', 'circle-exclamation']" size="2x"></fa-icon>
+    <span>No category created yet.</span>
+  </div>
+}

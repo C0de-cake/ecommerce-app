@@ -1,3 +1,20 @@
+<div class="absolute z-30 top-0 right-0 me-4" role="alert">
+  @for (toast of toastService.toasts; track toast) {
+    <div role="alert" class="alert my-4 flex justify-start items-center"
+         [ngClass]="{'alert-error': toast.type === 'ERROR',
+     'alert-success': toast.type === 'SUCCESS'}">
+      @if(toast.type === 'ERROR') {
+        <fa-icon [icon]="['fas', 'xmark']" class="mt-1" size="2x"></fa-icon>
+      }
+      @if(toast.type === 'SUCCESS') {
+        <fa-icon [icon]="['fas', 'check']" class="mt-1" size="2x"></fa-icon>
+      }
+      <div>{{toast.body}}</div>
+    </div>
+  }
+</div>
+
+
 <div class="flex flex-col min-h-screen">
   <ecom-navbar></ecom-navbar>
   <div class="container mx-auto py-7 grow h-full">

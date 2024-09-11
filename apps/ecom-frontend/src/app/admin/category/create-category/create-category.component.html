@@ -1,0 +1,26 @@
+<div class="grid grid-cols-3">
+  <div></div>
+  <form id="createForm" (ngSubmit)="create()" [formGroup]="createForm">
+    <h1 class="text-lg font-bold">Create new category</h1>
+    <label class="form-control w-full">
+      <div class="label">
+        <span class="label-text">Name</span>
+      </div>
+      <input type="text" placeholder="Type name here" class="input input-bordered w-full"
+      formControlName="name" [class.input-error]="name.invalid && !name.untouched"/>
+      <div class="label">
+        <span class="label-text-alt text-red-600" *ngxControlError="name; track: 'required'">
+          Name is required
+        </span>
+      </div>
+    </label>
+    <button type="submit" class="btn btn-primary btn-wide w-full"
+    [disabled]="createForm.invalid">
+      @if(loading) {
+        <span class="loading loading-spinner"></span>
+      }
+      Create category
+    </button>
+  </form>
+  <div></div>
+</div>
