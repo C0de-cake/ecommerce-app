@@ -63,4 +63,9 @@ public class SpringDataProductRepository implements ProductRepository {
   public int delete(PublicId publicId) {
     return jpaProductRepository.deleteByPublicId(publicId.value());
   }
+
+  @Override
+  public Page<Product> findAllFeaturedProduct(Pageable pageable) {
+    return jpaProductRepository.findAllByFeaturedTrue(pageable).map(ProductEntity::to);
+  }
 }
