@@ -2,6 +2,7 @@ import { IconDefinition } from '@fortawesome/angular-fontawesome';
 import {
   faCartShopping,
   faCheck,
+  faShoppingCart,
   faTruckFast,
   faUser,
   faXmark,
@@ -21,4 +22,5 @@ export const fontAwesomeIcons: IconDefinition[] = [
   faTwitter,
   faXmark,
   faCheck,
+  faShoppingCart,
 ];
