@@ -16,6 +16,5 @@ public interface JpaProductRepository  extends JpaRepository<ProductEntity, Long
 
   Page<ProductEntity> findAllByFeaturedTrue(Pageable pageable);
 
-
-
+  Page<ProductEntity> findByCategoryPublicIdAndPublicIdNot(Pageable pageable, UUID categoryPublicId, UUID excludedProductPublicId);
 }

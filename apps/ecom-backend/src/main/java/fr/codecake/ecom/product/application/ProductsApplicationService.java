@@ -13,6 +13,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @Service
 public class ProductsApplicationService {
 
@@ -59,6 +61,16 @@ public class ProductsApplicationService {
   @Transactional(readOnly = true)
   public Page<Product> getFeaturedProducts(Pageable pageable) {
     return productShop.getFeaturedProducts(pageable);
+  }
+
+  @Transactional(readOnly = true)
+  public Optional<Product> findOne(PublicId id) {
+    return productCRUD.findOne(id);
+  }
+
+  @Transactional(readOnly = true)
+  public Page<Product> findRelated(Pageable pageable, PublicId productPublicId) {
+    return productShop.findRelated(pageable, productPublicId);
   }
 
 }
