@@ -1,6 +1,7 @@
 package fr.codecake.ecom.product.application;
 
 import fr.codecake.ecom.product.domain.aggregate.Category;
+import fr.codecake.ecom.product.domain.aggregate.FilterQuery;
 import fr.codecake.ecom.product.domain.aggregate.Product;
 import fr.codecake.ecom.product.domain.repository.CategoryRepository;
 import fr.codecake.ecom.product.domain.repository.ProductRepository;
@@ -71,6 +72,11 @@ public class ProductsApplicationService {
   @Transactional(readOnly = true)
   public Page<Product> findRelated(Pageable pageable, PublicId productPublicId) {
     return productShop.findRelated(pageable, productPublicId);
+  }
+
+  @Transactional(readOnly = true)
+  public Page<Product> filter(Pageable pageable, FilterQuery query) {
+    return productShop.filter(pageable, query);
   }
 
 }

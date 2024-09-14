@@ -1,5 +1,6 @@
 package fr.codecake.ecom.product.infrastructure.secondary.repository;
 
+import fr.codecake.ecom.product.domain.aggregate.FilterQuery;
 import fr.codecake.ecom.product.domain.aggregate.Picture;
 import fr.codecake.ecom.product.domain.aggregate.Product;
 import fr.codecake.ecom.product.domain.repository.ProductRepository;
@@ -78,5 +79,12 @@ public class SpringDataProductRepository implements ProductRepository {
   public Page<Product> findByCategoryExcludingOne(Pageable pageable, PublicId categoryPublicId, PublicId productPublicId) {
     return jpaProductRepository.findByCategoryPublicIdAndPublicIdNot(pageable, categoryPublicId.value(), productPublicId.value())
       .map(ProductEntity::to);
+  }
+
+  @Override
+  public Page<Product> findByCategoryAndSize(Pageable pageable, FilterQuery filterQuery) {
+    return jpaProductRepository.findByCategoryPublicIdAndSizesIn(
+      pageable, filterQuery.categoryId().value(), filterQuery.sizes()
+    ).map(ProductEntity::to);
   }
 }
