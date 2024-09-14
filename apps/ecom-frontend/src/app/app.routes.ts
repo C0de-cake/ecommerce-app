@@ -6,6 +6,7 @@ import { CreateProductComponent } from './admin/product/create-product/create-pr
 import { AdminProductsComponent } from './admin/product/admin-products/admin-products.component';
 import { HomeComponent } from './home/home.component';
 import { ProductDetailComponent } from './shop/product-detail/product-detail.component';
+import { ProductsComponent } from './shop/products/products.component';
 
 export const appRoutes: Route[] = [
   {
@@ -47,5 +48,9 @@ export const appRoutes: Route[] = [
   {
     path: 'product/:publicId',
     component: ProductDetailComponent,
+  },
+  {
+    path: 'products',
+    component: ProductsComponent,
   },
 ];

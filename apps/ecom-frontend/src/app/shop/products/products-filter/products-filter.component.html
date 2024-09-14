@@ -1,0 +1,23 @@
+<form [formGroup]="formFilterProducts">
+  <div class="font-bold text-lg mb-2">Size</div>
+  <form [formGroup]="getSizeFormGroup()">
+    @for(size of sizes; track size) {
+      <label class="cursor-pointer label justify-start items-center">
+        <input type="checkbox" checked="checked" class="checkbox checkbox-primary checkbox-md"
+        formControlName="{{size}}"/>
+        <span class="label-text ms-3">{{size}}</span>
+      </label>
+    }
+  </form>
+  <div class="font-bold text-lg mt-5 mb-2">Sorted By</div>
+  <label class="cursor-pointer label justify-start items-center">
+    <input type="radio" name="sort" value="asc" class="radio radio-primary"
+    formControlName="sort"/>
+    <span class="label-text ms-3">Oldest</span>
+  </label>
+  <label class="cursor-pointer label justify-start items-center">
+    <input type="radio" name="sort" value="desc" class="radio radio-primary"
+           formControlName="sort"/>
+    <span class="label-text ms-3">Newest</span>
+  </label>
+</form>

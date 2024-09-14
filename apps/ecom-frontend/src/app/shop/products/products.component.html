@@ -1,0 +1,22 @@
+<div class="grid grid-cols-[1fr_6fr] gap-5">
+  <div class="ms-5">
+    <ecom-products-filter [sort]="sort()!" [size]="size()!" (productFilter)="onFilterChange($event)"></ecom-products-filter>
+  </div>
+  @if(filteredProductsQuery.isSuccess() && filteredProductsQuery.data().content.length !== 0) {
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+      @for(product of filteredProductsQuery.data().content; track product.publicId) {
+        <ecom-product-card [product]="product"></ecom-product-card>
+      }
+    </div>
+  } @else if (filteredProductsQuery.isFetching()) {
+    <div class="flex w-full justify-center">
+      <span class="loading loading-spinner loading-lg"></span>
+    </div>
+  } @else if (filteredProductsQuery.isSuccess() && filteredProductsQuery.data().content.length === 0) {
+    <div class="flex flex-col items-center justify-center">
+      <div class="font-bold text-2xl">No results found</div>
+      <div>Try to change your filters</div>
+    </div>
+  }
+</div>
+

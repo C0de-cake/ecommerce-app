@@ -24,9 +24,9 @@
       <div>Brand: <span class="font-bold">{{ productQuery.data().brand }}</span></div>
       <div class="flex items-center mt-1">
         <div class="me-1">Color:</div>
-        <div class="w-5 h-5 rounded-full" [ngStyle]="{'background-color': productQuery.data()?.color}"></div>
+        <div class="w-5 h-5 rounded-full" [ngStyle]="{'background-color': productQuery.data().color}"></div>
       </div>
-      <div>Size: <span class="font-bold">{{ productQuery.data()?.size }}</span></div>
+      <div>Size: <span class="font-bold">{{ productQuery.data().size }}</span></div>
       <div class="my-5 w-96">
         <h2 class="text-xl font-bold">Description</h2>
         {{productQuery.data().description}}

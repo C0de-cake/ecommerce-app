@@ -6,7 +6,11 @@ import {
   Pagination,
 } from '../model/request.model';
 import { Observable } from 'rxjs';
-import { Product } from '../../admin/model/product.model';
+import {
+  Product,
+  ProductCategory,
+  ProductFilter,
+} from '../../admin/model/product.model';
 import { environment } from '../../../environments/environment';
 
 @Injectable({
@@ -38,6 +42,29 @@ export class UserProductService {
     params = params.append('publicId', productPublicId);
     return this.http.get<Page<Product>>(
       `${environment.apiUrl}/products-shop/related`,
+      { params }
+    );
+  }
+
+  findAllCategories(): Observable<Page<ProductCategory>> {
+    return this.http.get<Page<ProductCategory>>(
+      `${environment.apiUrl}/categories`
+    );
+  }
+
+  filter(
+    pageRequest: Pagination,
+    productFilter: ProductFilter
+  ): Observable<Page<Product>> {
+    let params = createPaginationOption(pageRequest);
+    if (productFilter.category) {
+      params = params.append('categoryId', productFilter.category);
+    }
+    if (productFilter.size) {
+      params = params.append('productSizes', productFilter.size);
+    }
+    return this.http.get<Page<Product>>(
+      `${environment.apiUrl}/products-shop/filter`,
       { params }
     );
   }

@@ -13,7 +13,14 @@
         <details #productsMenu>
           <summary>Products</summary>
           <ul class="z-30">
-            <li><a href="/products">All</a></li>
+            @if(categoryQuery.isSuccess() && categoryQuery.data()) {
+              @for(category of categoryQuery.data().content; track category.publicId) {
+                <li><a [routerLink]="['products']"
+                [queryParams]="{category: category.publicId}"
+                (click)="closeMenu(productsMenu)"
+                (clickOutside)="closeMenu(productsMenu)">{{category.name}}</a></li>
+              }
+            }
           </ul>
         </details>
       </li>
