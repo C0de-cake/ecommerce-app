@@ -1,5 +1,6 @@
 package fr.codecake.ecom.product.infrastructure.secondary.repository;
 
+import fr.codecake.ecom.order.domain.order.vo.ProductPublicId;
 import fr.codecake.ecom.product.domain.aggregate.FilterQuery;
 import fr.codecake.ecom.product.domain.aggregate.Picture;
 import fr.codecake.ecom.product.domain.aggregate.Product;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.UUID;
 
 @Repository
 public class SpringDataProductRepository implements ProductRepository {
@@ -86,5 +88,17 @@ public class SpringDataProductRepository implements ProductRepository {
     return jpaProductRepository.findByCategoryPublicIdAndSizesIn(
       pageable, filterQuery.categoryId().value(), filterQuery.sizes()
     ).map(ProductEntity::to);
+  }
+
+  @Override
+  public List<Product> findByPublicIds(List<PublicId> publicIds) {
+    List<UUID> publicIdsUUID = publicIds.stream().map(PublicId::value).toList();
+    return jpaProductRepository.findAllByPublicIdIn(publicIdsUUID)
+      .stream().map(ProductEntity::to).toList();
+  }
+
+  @Override
+  public void updateQuantity(ProductPublicId productPublicId, long quantity) {
+    jpaProductRepository.updateQuantity(productPublicId.value(), quantity);
   }
 }
