@@ -1,0 +1,12 @@
+@if (isValidAccess) {
+  <div class="flex flex-col items-center justify-center mt-20">
+    <fa-icon class="text-green-600" [icon]="['far', 'circle-check']" size="5x"></fa-icon>
+    <div class="font-bold text-2xl">Thanks for your order</div>
+    <div>You will receive an confirmation email shortly</div>
+  </div>
+} @else {
+  <div class="flex flex-col items-center justify-center">
+    <div class="font-bold text-2xl">Invalid cart session</div>
+    <div>Please try again</div>
+  </div>
+}

@@ -7,6 +7,8 @@ import { AdminProductsComponent } from './admin/product/admin-products/admin-pro
 import { HomeComponent } from './home/home.component';
 import { ProductDetailComponent } from './shop/product-detail/product-detail.component';
 import { ProductsComponent } from './shop/products/products.component';
+import { CartComponent } from './shop/cart/cart.component';
+import { CartSuccessComponent } from './shop/cart-success/cart-success.component';
 
 export const appRoutes: Route[] = [
   {
@@ -52,5 +54,13 @@ export const appRoutes: Route[] = [
   {
     path: 'products',
     component: ProductsComponent,
+  },
+  {
+    path: 'cart',
+    component: CartComponent,
+  },
+  {
+    path: 'cart/success',
+    component: CartSuccessComponent,
   },
 ];

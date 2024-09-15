@@ -12,6 +12,7 @@ import {
   faTwitter,
   faYoutube,
 } from '@fortawesome/free-brands-svg-icons';
+import { faCircleCheck } from '@fortawesome/free-regular-svg-icons';
 
 export const fontAwesomeIcons: IconDefinition[] = [
   faUser,
@@ -23,4 +24,5 @@ export const fontAwesomeIcons: IconDefinition[] = [
   faXmark,
   faCheck,
   faShoppingCart,
+  faCircleCheck,
 ];

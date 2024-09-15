@@ -29,12 +29,13 @@
       <div>Size: <span class="font-bold">{{ productQuery.data().size }}</span></div>
       <div class="my-5 w-96">
         <h2 class="text-xl font-bold">Description</h2>
-        {{productQuery.data().description}}
+        {{ productQuery.data().description }}
       </div>
       <button class="btn btn-primary mt-5 w-full lg:w-64"
-              [disabled]="productQuery.data().nbInStock <= 0">
-        <fa-icon class="me-1" [icon]="['fas', 'shopping-cart']"></fa-icon>
-        Add to cart
+              [disabled]="productQuery.data().nbInStock <= 0"
+              (click)="addToCart(productQuery.data()!)">
+        <fa-icon class="me-1" [icon]="['fas', iconAddToCart]"></fa-icon>
+        {{ labelAddToCart }}
       </button>
     </div>
   </div>
@@ -47,7 +48,7 @@
   <h2 class="text-2xl font-bold mb-7 ms-4 sm:ms-0">Related products</h2>
   <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4
   xl:grid-cols-5 gap-8 sm:gap-5">
-    @for(product of relatedProductQuery.data()?.content!; track product.publicId) {
+    @for (product of relatedProductQuery.data()?.content!; track product.publicId) {
       <ecom-product-card [product]="product"></ecom-product-card>
     }
   </div>
