@@ -13,12 +13,18 @@ import fr.codecake.ecom.order.domain.order.vo.StripeSessionId;
 import fr.codecake.ecom.order.domain.user.vo.*;
 import fr.codecake.ecom.product.domain.vo.PublicId;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+
+import static fr.codecake.ecom.product.infrastructure.primary.ProductsAdminResource.ROLE_ADMIN;
 
 @RestController
 @RequestMapping("/api/orders")
@@ -80,7 +86,7 @@ public class OrderResource {
   }
 
   private void handleCheckoutSessionCompleted(StripeObject rawStripeObject) {
-    if(rawStripeObject instanceof Session session) {
+    if (rawStripeObject instanceof Session session) {
       Address address = session.getCustomerDetails().getAddress();
 
       UserAddress userAddress = UserAddressBuilder.userAddress()
@@ -102,6 +108,28 @@ public class OrderResource {
 
       orderApplicationService.updateOrder(sessionInformation);
     }
+  }
 
+  @GetMapping("/user")
+  public ResponseEntity<Page<RestOrderRead>> getOrdersForConnectedUser(Pageable pageable) {
+    Page<Order> orders = orderApplicationService.findOrdersForConnectedUser(pageable);
+    PageImpl<RestOrderRead> restOrderReads = new PageImpl<>(
+      orders.getContent().stream().map(RestOrderRead::from).toList(),
+      pageable,
+      orders.getTotalElements()
+    );
+    return ResponseEntity.ok(restOrderReads);
+  }
+
+  @GetMapping("/admin")
+  @PreAuthorize("hasAnyRole('" + ROLE_ADMIN + "')")
+  public ResponseEntity<Page<RestOrderReadAdmin>> getOrdersForAdmin(Pageable pageable) {
+    Page<Order> orders = orderApplicationService.findOrdersForAdmin(pageable);
+    PageImpl<RestOrderReadAdmin> restOrderReads = new PageImpl<>(
+      orders.getContent().stream().map(RestOrderReadAdmin::from).toList(),
+      pageable,
+      orders.getTotalElements()
+    );
+    return ResponseEntity.ok(restOrderReads);
   }
 }

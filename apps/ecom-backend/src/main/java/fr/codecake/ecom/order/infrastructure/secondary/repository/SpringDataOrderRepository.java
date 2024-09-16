@@ -4,8 +4,11 @@ import fr.codecake.ecom.order.domain.order.aggregate.Order;
 import fr.codecake.ecom.order.domain.order.aggregate.StripeSessionInformation;
 import fr.codecake.ecom.order.domain.order.repository.OrderRepository;
 import fr.codecake.ecom.order.domain.order.vo.OrderStatus;
+import fr.codecake.ecom.order.domain.user.vo.UserPublicId;
 import fr.codecake.ecom.order.infrastructure.secondary.entity.OrderEntity;
 import fr.codecake.ecom.product.domain.vo.PublicId;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
@@ -41,5 +44,16 @@ public class SpringDataOrderRepository implements OrderRepository {
   public Optional<Order> findByStripeSessionId(StripeSessionInformation stripeSessionInformation) {
     return jpaOrderRepository.findByStripeSessionId(stripeSessionInformation.stripeSessionId().value())
       .map(OrderEntity::toDomain);
+  }
+
+  @Override
+  public Page<Order> findAllByUserPublicId(UserPublicId userPublicId, Pageable pageable) {
+    return jpaOrderRepository.findAllByUserPublicId(userPublicId.value(), pageable)
+      .map(OrderEntity::toDomain);
+  }
+
+  @Override
+  public Page<Order> findAll(Pageable pageable) {
+    return jpaOrderRepository.findAll(pageable).map(OrderEntity::toDomain);
   }
 }
