@@ -1,0 +1,50 @@
+<div class="w-full flex justify-between items-center">
+  <div>
+    <h1 class="text-2xl font-bold">Your orders</h1>
+    <div>Here's the list of your orders</div>
+  </div>
+</div>
+<div class="border-t w-full border-solid border-gray-300 mt-2 mb-5"></div>
+@if(ordersAdminQuery.isSuccess() && ordersAdminQuery.data().numberOfElements !== 0) {
+  <div class="overflow-x-auto border border-gray-300 rounded-md">
+    <table class="table table-lg table-zebra">
+      <thead class="border-gray-300">
+      <tr class="border-gray-300">
+        <th></th>
+        <th>Products</th>
+        <th>Email</th>
+        <th>Address</th>
+        <th>Status</th>
+        <th>Nb of items</th>
+        <th>Total amount</th>
+      </tr>
+      </thead>
+      <tbody class="border-0">
+        @for(order of ordersAdminQuery.data().content!; track order.publicId; let i = $index) {
+          <tr class="border-t-1 border-gray-300">
+            <th>{{i}}</th>
+            <td>{{computeItemsName(order.orderedItems)}}</td>
+            <td>{{order.email}}</td>
+            <td>{{order.address}}</td>
+            <td>{{order.status}}</td>
+            <td>{{computeItemsQuantity(order.orderedItems)}}</td>
+            <td>{{computeTotal(order.orderedItems) | currency}}</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+} @else if (ordersAdminQuery.isPending()) {
+  <div class="flex w-full justify-center">
+    <span class="loading loading-spinner loading-lg"></span>
+  </div>
+} @else if (ordersAdminQuery.data()?.numberOfElements === 0) {
+  <div class="alert alert-info">
+    <fa-icon [icon]="['fas', 'circle-exclamation']" size="2x"></fa-icon>
+    <span>No order created yet.</span>
+  </div>
+} @else if (ordersAdminQuery.isError() && checkIfPlatformBrowser()) {
+  <div class="alert alert-error">
+    <span>Error! Failed to load orders!</span>
+  </div>
+}
